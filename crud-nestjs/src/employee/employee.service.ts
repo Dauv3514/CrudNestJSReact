@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Employee, EmployeeDocument } from './schema/employee-schema';
 import { Model } from 'mongoose';
+import { UpdateEmployeeDto } from './dto/employeeUpdateBodyDto';
 
 @Injectable()
 export class EmployeeService {
@@ -14,5 +15,13 @@ export class EmployeeService {
   async create(employee: Employee) {
     const newEmployee = new this.employeeModel(employee);
     await newEmployee.save();
+  }
+  async getById(id: string) {
+    return await this.employeeModel.findById(id).exec();
+  }
+  async update(id: string, employee: UpdateEmployeeDto) {
+    return await this.employeeModel.findByIdAndUpdate(id, employee, {
+      new: true,
+    });
   }
 }
