@@ -24,4 +24,7 @@ export class EmployeeService {
       new: true,
     });
   }
+  async delete(id: string) {
+    return await this.employeeModel.findByIdAndDelete(id);
+  }
 }
